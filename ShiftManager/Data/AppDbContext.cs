@@ -3,9 +3,9 @@ using ShiftManager.Models;
 
 namespace ShiftManager.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Employee> Employees { get; set; }

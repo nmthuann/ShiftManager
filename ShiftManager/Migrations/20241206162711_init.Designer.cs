@@ -11,7 +11,7 @@ using ShiftManager.Data;
 
 namespace ShiftManager.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20241206162711_init")]
     partial class init
     {

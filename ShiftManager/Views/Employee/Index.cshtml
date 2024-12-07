@@ -1,0 +1,58 @@
+﻿@model ShiftManager.ViewModels.EmployeeViewModel
+
+<form method="get">
+    <div class="form-group">
+        <label for="branchId">Chọn chi nhánh:</label>
+        <select id="branchId" name="branchId" class="form-control">
+            <option selected value="">-- Tất cả --</option>
+            @foreach (var branch in Model.Branches)
+            {
+                <option selected=@(Model.BranchId == branch.Id ? "selected" : "") value="@branch.Id">
+                    @branch.BranchName
+                </option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Lọc</button>
+</form>
+
+@if (Model.Employees == null || !Model.Employees.Any())
+{
+    <p class="text-warning mt-3">Vui lòng chọn một chi nhánh để xem danh sách nhân viên.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>CitizenId</th>
+                <th>Name</th>
+                <th>EnglishName</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Is Active</th>
+                <th>Start Date</th>
+                <th>Birthday</th>
+                <th>Position</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model.Employees)
+            {
+                <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.CitizenId</td>
+                    <td>@employee.Name</td>
+                    <td>@employee.EnghlishName</td>
+                    <td>@employee.Phone</td>
+                    <td>@employee.Address</td>
+                    <td>@employee.IsActive</td>
+                    <td>@employee.StartDate.ToShortDateString()</td>
+                    <td>@employee.Birthday.ToShortDateString()</td>
+                    <td>@employee.Position?.PositionName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
