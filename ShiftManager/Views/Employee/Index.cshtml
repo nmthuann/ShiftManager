@@ -1,20 +1,35 @@
 ﻿@model ShiftManager.ViewModels.EmployeeViewModel
 
-<form method="get">
-    <div class="form-group">
-        <label for="branchId">Chọn chi nhánh:</label>
-        <select id="branchId" name="branchId" class="form-control">
-            <option selected value="">-- Tất cả --</option>
-            @foreach (var branch in Model.Branches)
-            {
-                <option selected=@(Model.BranchId == branch.Id ? "selected" : "") value="@branch.Id">
-                    @branch.BranchName
-                </option>
-            }
-        </select>
+<div class="d-flex justify-content-between align-items-end gap-3">
+    <div>
+        <form method="get" class="d-flex align-items-end">
+            <div class="form-group me-2">
+                <label for="branchId">Chọn chi nhánh:</label>
+                <select id="branchId" name="branchId" class="form-control">
+                    @foreach (var branch in Model.Branches)
+                    {
+                        <option selected=@(Model.BranchId == branch.Id ? "selected" : "") value="@branch.Id">
+                            @branch.BranchName
+                        </option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Filter</button>
+        </form>
     </div>
-    <button type="submit" class="btn btn-primary mt-2">Lọc</button>
-</form>
+
+
+    <div class=" align-items-center">
+        <div class="d-flex flex-row gap-2">
+            <button type="button" class="btn btn-primary d-flex align-items-center">
+                <i class="bi bi-download me-2"></i> Export
+            </button>
+            <a href="/employees/create" class="btn btn-primary d-flex align-items-center">
+                <i class="bi bi-plus-circle me-2"></i> Create
+            </a>
+        </div>
+    </div>
+</div>
 
 @if (Model.Employees == null || !Model.Employees.Any())
 {
@@ -26,15 +41,16 @@ else
         <thead>
             <tr>
                 <th>ID</th>
-                <th>CitizenId</th>
+                <th>Citizen ID</th>
                 <th>Name</th>
-                <th>EnglishName</th>
+                <th>English Name</th>
                 <th>Phone</th>
                 <th>Address</th>
-                <th>Is Active</th>
+                <th>Active</th>
                 <th>Start Date</th>
                 <th>Birthday</th>
                 <th>Position</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -44,13 +60,29 @@ else
                     <td>@employee.Id</td>
                     <td>@employee.CitizenId</td>
                     <td>@employee.Name</td>
-                    <td>@employee.EnghlishName</td>
+                    <td>@employee.EnglishName</td>
                     <td>@employee.Phone</td>
                     <td>@employee.Address</td>
                     <td>@employee.IsActive</td>
                     <td>@employee.StartDate.ToShortDateString()</td>
                     <td>@employee.Birthday.ToShortDateString()</td>
                     <td>@employee.Position?.PositionName</td>
+                    <td>
+                        <div class="d-flex flex-row gap-3">
+                            <a href="/Employee/Details/@employee.Id" class="btn btn-sm btn-info" title="View">
+                                <i class="bi bi-eye"></i> 
+                            </a>
+                            <a href="/Employee/Edit/@employee.Id" class="btn btn-sm btn-warning" title="Edit">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                            <form action="/Employee/Delete/@employee.Id" method="post" style="display: inline-block;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this employee?');" title="Delete">
+                                    <i class="bi bi-trash"></i> 
+                                </button>
+                            </form>
+                        </div>
+                       
+                    </td>
                 </tr>
             }
         </tbody>

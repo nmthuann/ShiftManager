@@ -1,0 +1,69 @@
+﻿@model ShiftManager.Models.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create a new Employee</h1>
+<div class="d-flex justify-content-between ">
+    <h5>Điền các thông tin vào form</h5>
+    <div class="align-items-end">
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+<hr />
+<div class="d-flex justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CitizenId" class="control-label"></label>
+                <input asp-for="CitizenId" id="CitizenId" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" id="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EnglishName" class="control-label"></label>
+                <input asp-for="EnglishName" id="EnglishName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" id="Phone" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" id="Address" class="form-control" />
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" id="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input type="date" asp-for="StartDate" id="StartDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthday" class="control-label"></label>
+                <input type="date" asp-for="Birthday" id="Birthday" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="BranchId" class="control-label"></label>
+                <select asp-for="BranchId" id="BranchId" class="form-control" asp-items="ViewBag.BranchId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PositionId" class="control-label"></label>
+                <select asp-for="PositionId" id="PositionId" class="form-control" asp-items="ViewBag.PositionId"></select>
+            </div>
+            <div class="form-group mt-2">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

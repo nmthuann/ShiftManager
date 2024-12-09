@@ -4,8 +4,12 @@ namespace ShiftManager.ViewModels
 {
     public class EmployeeViewModel
     {
-        public int? BranchId { get; set; }  // Lưu trữ ID của chi nhánh đã chọn
-        public required List<Employee> Employees { get; set; }  // Danh sách nhân viên
-        public required List<Branch> Branches { get; set; }  // Danh sách chi nhánh
+        public int BranchId { get; set; } 
+        public DateTime Birthday { get; set; }
+        public DateTime StartDate { get; set; }
+        public int PositionId { get; set; }
+        public required List<Employee> Employees { get; set; }
+        public required List<Branch> Branches { get; set; }  
+        public required List<Position> Positions { get; set; }
     }
 }
