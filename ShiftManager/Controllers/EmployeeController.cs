@@ -87,8 +87,29 @@ namespace ShiftManager.Controllers
 
                 return View(model);
             }
-          
-            
+        }
+
+        [HttpGet("details/{id}")]
+        public IActionResult Details(Guid id)
+        {
+            var employee = _context.Employees
+                .Include(e => e.Branch)
+                .Include(e => e.Position)
+                .FirstOrDefault(e => e.Id == id);
+
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+        }
+
+        [HttpPut("edit/{id}")]
+        public IActionResult Edit(Guid id, Employee model) {
+
+            return View(model);
         }
     }
+
 }
