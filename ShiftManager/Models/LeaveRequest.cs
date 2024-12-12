@@ -11,9 +11,9 @@ namespace ShiftManager.Models
         public int Id { get; set; }
         public required DateTime DayOff { get; set; }
         public required string Reason { get; set; }
-        public required OffTypeEnum OffType { get; set; }
+        public required string OffType { get; set; }
 
         public Guid EmployeeId { get; set; }
-        public required Employee Employee { get; set; }
+        public Employee? Employee { get; set; }
     }
 }

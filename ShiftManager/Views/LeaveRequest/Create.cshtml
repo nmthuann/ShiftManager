@@ -1,0 +1,46 @@
+﻿@model ShiftManager.Models.LeaveRequest
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h5>LeaveRequest</h5>
+<hr />
+<div class="d-flex align-items-center justify-content-center">
+    <div class="col-md-4">
+        <h3 class="text-center mb-4">Create Leave Request Form</h3>
+        <form asp-action="Create" method="post">
+            <div class="form-group mb-3">
+                <label asp-for="EmployeeId" class="control-label">Employee Id</label>
+                <input asp-for="EmployeeId" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="DayOff" class="control-label"> Day Off </label>
+                <input asp-for="DayOff" class="form-control" />
+                <span asp-validation-for="DayOff" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Reason" class="control-label">Reason</label>
+                <textarea asp-for="Reason" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="OffType" class="control-label"> Off Type</label>
+                <select asp-for="OffType" class="form-control" asp-items="ViewBag.OffTypeList"></select>
+                <span asp-validation-for="OffType" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary w-100" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,5 +1,101 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ShiftManager.ViewModels.LeaveRequestViewModel
+
 @{
+    ViewData["Title"] = "Search for Employee Leave Information";
+}
+
+
+<h1 >Leave Request Manager</h1>
+<p >This page allows you manage and check their leave requests and reasons.</p>
+<hr />
+
+<div class="d-flex justify-content-center mt-4">
+    <div class="col-md-6">
+        <form method="get" action="/leave-requests/search">
+            <div class="form-group">
+                <label for="searchInput" class="form-label">Enter employee details:</label>
+                <input type="text"
+                       id="searchInput"
+                       name="citizenId"
+                       class="form-control"
+                       placeholder="Enter Citizen ID..."
+                       aria-label="Search">
+            </div>
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary w-100">Search</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    <div class="m-4 d-flex flex-row justify-content-between align-items-end">
+        <div>
+            <h3>Employee Information</h3>
+            <p><strong>Name:</strong> @Model.Employee.Name</p>
+            <p><strong>Citizen ID:</strong> @Model.Employee.CitizenId</p>
+            <p><strong>Phone:</strong> @Model.Employee.Phone</p>
+        </div>
+
+        <div class=" align-items-center">
+            <div class="d-flex flex-row gap-2">
+                <button type="button" class="btn btn-primary d-flex align-items-center">
+                    <i class="bi bi-download me-2"></i> Export
+                </button>
+                <a href="/leave-requests/create?employeeId=@Model.Employee.Id" class="btn btn-primary d-flex align-items-center">
+                    <i class="bi bi-plus-circle me-2"></i> Create
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <h3>Leave Requests</h3>
+    <table class="table ">
+        <thead>
+            <tr>
+                <th>Day Off</th>
+                <th>Off Type</th>
+                <th>Reason</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var leave in Model.LeaveRequests)
+            {
+                <tr>
+                    <td>@leave.DayOff</td>
+                    <td>@leave.OffType</td>
+                    <td>
+                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            View Reason
+                        </button>
+
+                        <div class="modal fade" id="reasonModal-@leave.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @leave.Reason
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p>@ViewBag.Message</p>
 }

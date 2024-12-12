@@ -20,10 +20,10 @@ namespace ShiftManager.Controllers
             var positions = _context.Positions.ToList();
             var employees = _context.Employees.Include(e => e.Branch).AsQueryable();
 
-            if (branchId != null)
-            {
-                employees = employees.Where(e => e.BranchId == branchId);
-            }
+            //if (branchId != null)
+            //{
+            //    employees = employees.Where(e => e.BranchId == branchId);
+            //}
 
             var viewModel = new EmployeeViewModel
             {
@@ -105,10 +105,59 @@ namespace ShiftManager.Controllers
             return View(employee);
         }
 
-        [HttpPut("edit/{id}")]
-        public IActionResult Edit(Guid id, Employee model) {
+        [HttpGet("edit/{id}")]
+        public IActionResult Edit(Guid id)
+        {
+            var employee = _context.Employees.Find(id);
 
-            return View(model);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.BranchId = new SelectList(_context.Branches, "Id", "BranchName", employee.BranchId);
+            ViewBag.PositionId = new SelectList(_context.Positions, "Id", "PositionName", employee.PositionId);
+
+            return View(employee);
+        }
+
+        [HttpPost("edit/{id}")]
+        public IActionResult Edit(Guid id, Employee model) {
+            var findEmp = this._context.Employees.Find(id);
+            if (findEmp == null)
+            {
+                return NotFound();
+            }
+            if (!ModelState.IsValid)
+            {
+                ViewBag.BranchId = new SelectList(_context.Branches, "Id", "BranchName", model.BranchId);
+                ViewBag.PositionId = new SelectList(_context.Positions, "Id", "PositionName", model.PositionId);
+                return View(model);
+            }
+
+            findEmp.CitizenId = model.CitizenId;
+            findEmp.Name = model.Name;
+            findEmp.EnglishName = model.EnglishName;
+            findEmp.Phone = model.Phone;
+            findEmp.Address = model.Address;
+            findEmp.IsActive = model.IsActive;
+            findEmp.StartDate = model.StartDate;
+            findEmp.Birthday = model.Birthday;
+            findEmp.BranchId = model.BranchId;
+            findEmp.PositionId = model.PositionId;
+
+
+            try
+            {
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.BranchId = new SelectList(_context.Branches, "Id", "BranchName", model.BranchId);
+                ViewBag.PositionId = new SelectList(_context.Positions, "Id", "PositionName", model.PositionId);
+                return View(model);
+            }
         }
     }
 

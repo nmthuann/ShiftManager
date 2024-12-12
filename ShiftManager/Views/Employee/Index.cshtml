@@ -1,6 +1,10 @@
 ﻿@model ShiftManager.ViewModels.EmployeeViewModel
 
-<div class="d-flex justify-content-between align-items-end gap-3">
+<h1>Employee Manager</h1>
+<p>This page allows you manage employee.</p>
+<hr />
+
+<div class="d-flex justify-content-between align-items-end gap-3 mt-4">
     <div>
         <form method="get" class="d-flex align-items-end">
             <div class="form-group me-2">
@@ -72,10 +76,10 @@ else
                             <a href="/employees/details/@employee.Id" class="btn btn-sm btn-info" title="View">
                                 <i class="bi bi-eye"></i> 
                             </a>
-                            <a href="/Employee/Edit/@employee.Id" class="btn btn-sm btn-warning" title="Edit">
+                            <a href="/employees/edit/@employee.Id" class="btn btn-sm btn-warning" title="Edit">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <form action="/Employee/Delete/@employee.Id" method="post" style="display: inline-block;">
+                            <form action="/employees/delete/@employee.Id" method="post" style="display: inline-block;">
                                 <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this employee?');" title="Delete">
                                     <i class="bi bi-trash"></i> 
                                 </button>

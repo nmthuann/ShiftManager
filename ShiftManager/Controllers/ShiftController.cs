@@ -2,7 +2,7 @@
 
 namespace ShiftManager.Controllers
 {
-    public class ShiftAssignmentController : Controller
+    public class ShiftController : Controller
     {
         public IActionResult Index()
         {
