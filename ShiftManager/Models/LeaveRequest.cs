@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using ShiftManager.Commons.Enums;
 
 namespace ShiftManager.Models
 {
@@ -9,6 +8,8 @@ namespace ShiftManager.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [Column(TypeName = "timestamp without time zone")]
         public required DateTime DayOff { get; set; }
         public required string Reason { get; set; }
         public required string OffType { get; set; }

@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using ShiftManager.Commons.Enums;
 using ShiftManager.Data;
 using ShiftManager.Models;
@@ -94,7 +92,7 @@ namespace ShiftManager.Controllers
             {
                 var leaveRequest = new LeaveRequest
                 {
-                    DayOff = model.DayOff.ToUniversalTime(), // UTC
+                    DayOff = model.DayOff, // UTC
                     Reason = model.Reason,
                     OffType = model.OffType,
                     EmployeeId = employee.Id,
@@ -108,9 +106,62 @@ namespace ShiftManager.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = ex.Message;
                 Console.WriteLine(ex);
+                ViewBag.ErrorMessage = ex.Message;
                 ViewBag.EmployeeId = employee.Id;
+                ViewBag.OffTypeList = Enum.GetValues(typeof(OffTypeEnum))
+                                          .Cast<OffTypeEnum>()
+                                          .Select(e => new SelectListItem
+                                          {
+                                              Value = e.ToString(),
+                                              Text = e.ToString()
+                                          }).ToList();
+                return View(model);
+            }
+        }
+
+
+        [HttpGet("edit/{id}")]
+        public IActionResult Edit(int id)
+        {
+            var leave = _context.LeaveRequests.Find(id);
+            if (leave == null) {
+                return BadRequest(); 
+            }  
+            ViewBag.EmployeeId = leave.EmployeeId;
+            ViewBag.OffTypeList = Enum.GetValues(typeof(OffTypeEnum))
+                                      .Cast<OffTypeEnum>()
+                                      .Select(e => new SelectListItem
+                                      {
+                                          Value = e.ToString(),
+                                          Text = e.ToString()
+                                      }).ToList();
+            return View(leave);
+        }
+
+        [HttpPost("edit/{id}")]
+        public IActionResult Edit(int id, LeaveRequest model)
+        {
+            var findLeaveReq = this._context.LeaveRequests.Find(id);
+
+            if (findLeaveReq == null)
+            {
+                return BadRequest();
+            }
+
+            findLeaveReq.DayOff = model.DayOff;
+            findLeaveReq.OffType = model.OffType;
+            findLeaveReq.Reason = model.Reason;
+
+            try
+            {
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                ViewBag.EmployeeId = findLeaveReq.EmployeeId;
                 ViewBag.OffTypeList = Enum.GetValues(typeof(OffTypeEnum))
                                           .Cast<OffTypeEnum>()
                                           .Select(e => new SelectListItem

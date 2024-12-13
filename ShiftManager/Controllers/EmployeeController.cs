@@ -152,7 +152,7 @@ namespace ShiftManager.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 ViewBag.BranchId = new SelectList(_context.Branches, "Id", "BranchName", model.BranchId);
                 ViewBag.PositionId = new SelectList(_context.Positions, "Id", "PositionName", model.PositionId);
