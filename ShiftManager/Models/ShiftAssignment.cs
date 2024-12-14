@@ -19,8 +19,5 @@ namespace ShiftManager.Models
 
         public Guid EmployeeId { get; set; }
         public required Employee Employee { get; set; }
-
-
-        // từ ngày 25/11 - 1/11
     }
 }

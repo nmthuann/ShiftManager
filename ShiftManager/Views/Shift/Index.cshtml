@@ -1,5 +1,83 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<ShiftManager.ViewModels.ShiftViewModel>
 @{
+    ViewData["Title"] = "Create Shift Assignments Information";
 }
+
+<h1>Shift Manager</h1>
+<p>This page allows you manage and check the Employee&#39; Shifts.</p>
+<hr />
+
+<div class="d-flex flex-row justify-content-start gap-2">
+    <div>
+        <form method="get" action="/shifts" class="d-flex align-items-start flex-wrap">
+            <div class="form-group me-2">
+                <select name="optionIndex" class="form-select mb-3" aria-label=".form-select-lg example">
+                    @if (ViewBag.WeekOptions != null)
+                    {
+                        int index = 1;
+                        foreach (var weekRange in ViewBag.WeekOptions)
+                        {
+                            <option value="@index">Option @index: @weekRange</option>
+                            index++;
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group me-2">
+                <select id="BranchId" name="BranchId" class="form-select mb-3" asp-items="ViewBag.BranchId"></select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+
+    </div>
+        
+    <div>
+        <button type="button" class="btn btn-primary ">
+            <i class="bi bi-download "></i> Export
+        </button>
+    </div>
+</div>
+
+
+@if (ViewBag.TableHeader != null && ViewBag.SelectedWeek != null)
+{
+    <h4>Selected Week: @ViewBag.SelectedWeek</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach (var header in ViewBag.TableHeader)
+                {
+                    <th>@header</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.CitizenId</td>
+                    <td>@employee.Name</td>
+                    <td>@employee.EngName</td>
+                    @foreach (var shift in employee.ShiftsByDay)
+                    {
+                        <td>
+                            @shift.Value
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr/>
+}
+else
+{
+    <p class="text-muted">Please use the filters above to search and view shift assignments.</p>
+}
+

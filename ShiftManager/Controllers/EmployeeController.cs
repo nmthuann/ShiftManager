@@ -19,12 +19,8 @@ namespace ShiftManager.Controllers
             var branches =  _context.Branches.ToList();
             var positions = _context.Positions.ToList();
             var employees = _context.Employees.Include(e => e.Branch).AsQueryable();
-
-            //if (branchId != null)
-            //{
-            //    employees = employees.Where(e => e.BranchId == branchId);
-            //}
-
+            employees = employees.Where(e => e.BranchId == branchId);
+      
             var viewModel = new EmployeeViewModel
             {
                 BranchId = branchId,
