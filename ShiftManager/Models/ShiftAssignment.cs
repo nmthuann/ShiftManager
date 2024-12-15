@@ -4,15 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ShiftManager.Models
 {
-    [Index(nameof(DateAssigned), nameof(ShiftId), IsUnique = true)]
     public class ShiftAssignment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public DateTime DateAssigned { get; set; }
-
+        public DateOnly DateAssigned { get; set; }
 
         public int ShiftId { get; set; }
         public required Shift Shift { get; set; }

@@ -11,6 +11,10 @@ namespace ShiftManager.Models
 
         [Column(TypeName = "timestamp without time zone")]
         public required DateTime DayOff { get; set; }
+
+        public required int ShiftId { get; set; }
+        public required Shift Shift { get; set; }   
+
         public required string Reason { get; set; }
         public required string OffType { get; set; }
 

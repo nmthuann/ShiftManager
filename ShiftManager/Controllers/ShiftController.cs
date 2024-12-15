@@ -32,8 +32,8 @@ namespace ShiftManager.Controllers
 
                 var selectedWeekRange = weekRangesRender[(int)optionIndex - 1];
                 var weekParts = selectedWeekRange.Split(" - ");
-                var startDate = DateTime.ParseExact(weekParts[0], "dd/MM/yyyy", null);
-                var endDate = DateTime.ParseExact(weekParts[1], "dd/MM/yyyy", null);
+                var startDate = DateOnly.ParseExact(weekParts[0], "dd/MM/yyyy", null);
+                var endDate = DateOnly.ParseExact(weekParts[1], "dd/MM/yyyy", null);
 
                 
 
